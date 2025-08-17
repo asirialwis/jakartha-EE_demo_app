@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers",
@@ -26,6 +28,9 @@ public class Customer {
     @Column(name = "created_at", nullable = false, columnDefinition = "timestamp")
     private OffsetDateTime createdAt;
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaction> transactions = new ArrayList<>();
+
     @PrePersist
     public void prePersist() {
         createdAt = OffsetDateTime.now();
@@ -43,4 +48,17 @@ public class Customer {
 
     public OffsetDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(OffsetDateTime createdAt) { this.createdAt = createdAt; }
+
+    public List<Transaction> getTransactions() { return transactions; }
+    public void setTransactions(List<Transaction> transactions) { this.transactions = transactions; }
+
+    public void addTransaction(Transaction t) {
+        transactions.add(t);
+        t.setCustomer(this);
+    }
+
+    public void removeTransaction(Transaction t) {
+        transactions.remove(t);
+        t.setCustomer(null);
+    }
 }
