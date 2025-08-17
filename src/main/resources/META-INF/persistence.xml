@@ -6,7 +6,9 @@
 
     <persistence-unit name="demoPU" transaction-type="JTA">
         <jta-data-source>java:/jdbc/jakartaDS</jta-data-source>
-        <class>org.example.jakarthaeedemo.ejb.CustomerService</class>
+        <class>org.example.jakarthaeedemo.entity.Customer</class>
+        <class>org.example.jakarthaeedemo.entity.Transaction</class>
+
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
             <property name="hibernate.show_sql" value="true"/>
