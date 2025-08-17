@@ -50,4 +50,17 @@ public class CustomerService {
             throw new jakarta.ws.rs.NotFoundException("Customer not found");
         }
     }
+
+    public Optional<Customer> findByIdWithTransactions(Long id) {
+        Customer c = em.createQuery(
+                        "SELECT c FROM Customer c LEFT JOIN FETCH c.transactions WHERE c.id = :id",
+                        Customer.class
+                )
+                .setParameter("id", id)
+                .getSingleResult();
+
+        return Optional.ofNullable(c);
+    }
+
+
 }

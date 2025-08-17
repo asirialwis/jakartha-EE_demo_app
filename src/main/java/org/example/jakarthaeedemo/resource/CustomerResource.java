@@ -6,6 +6,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.example.jakarthaeedemo.dto.CustomerDTO;
+import org.example.jakarthaeedemo.dto.CustomerWithTransactionsDTO;
+import org.example.jakarthaeedemo.dto.TransactionDTO;
 import org.example.jakarthaeedemo.ejb.CustomerService;
 import org.example.jakarthaeedemo.entity.Customer;
 
@@ -60,4 +62,25 @@ public class CustomerResource {
         service.delete(id);
         return Response.noContent().build();
     }
+
+
+    @GET
+    @Path("{id}/map-transactions")
+    public CustomerWithTransactionsDTO getWithTransactions(@PathParam("id") long id) {
+        var customer = service.findByIdWithTransactions(id)
+                .orElseThrow(() -> new NotFoundException("Customer not found"));
+
+        var txDtos = customer.getTransactions().stream()
+                .map(t -> new TransactionDTO(t.getId(), t.getAmount()))
+                .toList();
+
+        return new CustomerWithTransactionsDTO(
+                customer.getId(),
+                customer.getName(),
+                customer.getEmail(),
+                txDtos
+        );
+    }
+
+
 }

@@ -5,7 +5,7 @@
              version="3.1">
 
     <persistence-unit name="demoPU" transaction-type="JTA">
-        <jta-data-source>java:/jdbc/jakartaDS</jta-data-source>
+        <jta-data-source>java:/jdbc/aivenDS</jta-data-source>
         <class>org.example.jakarthaeedemo.entity.Customer</class>
         <class>org.example.jakarthaeedemo.entity.Transaction</class>
 

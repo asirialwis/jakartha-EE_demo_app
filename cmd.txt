@@ -1,0 +1,7 @@
+wildfly credentials
+admin123
+admin 123
+(uname , pword)
+
+#Aiven DB
+jdbc:mysql://mysql-j2ee-realtor-app-24.h.aivencloud.com:17694/defaultdb?useSSL=true&requireSSL=true&verifyServerCertificate=false
